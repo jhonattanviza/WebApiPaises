@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 namespace WebApiPaises
 {
     public class Program
-    {
+    { // actualizacion a las 6.09
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();
