@@ -12,7 +12,7 @@ namespace WebApiPaises.Controllers
     [Produces("application/json")]
     [Route("api/Pais")]
    // [ApiController]
-    public class PaisController : ControllerBase
+    public class PaisController : Controller
     {
         private readonly ApplicationDbContext context;
 
@@ -30,7 +30,7 @@ namespace WebApiPaises.Controllers
 
         }
 
-        [HttpGet("{id}", Name = "PaisCreado")]
+        [HttpGet("{id}", Name = "paisCreado")]
         public IActionResult GetById(int id)
         {
             var pais = context.Paises.Include(x => x.Provincias).FirstOrDefault(x => x.Id == id);

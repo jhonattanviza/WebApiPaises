@@ -43,18 +43,51 @@ namespace WebApiPaises.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Provincia provincia, int idPais)
+        public IActionResult Create([FromBody] Provincia provincia, int PaisId)
         {
-            provincia.PaisId = idPais;
-            if (ModelState.IsValid)
+            provincia.PaisId = PaisId;
+
+            if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest(ModelState);  
             }
             context.Provincias.Add(provincia);
             context.SaveChanges();
+
             return new CreatedAtRouteResult("ProvinciaById", new { id = provincia.Id }, provincia);
 
         }
+
+
+
+        [HttpPut("{id}")]
+        public IActionResult Update([FromBody] Provincia provincia, int id)
+        {
+            if (provincia.Id != id)
+            {
+                return BadRequest();
+            }
+
+            context.Entry(provincia).State = EntityState.Modified;
+            context.SaveChanges();
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var provincia = context.Provincias.FirstOrDefault(x => x.Id == id);
+
+            if (provincia == null)
+            {
+                return NotFound();
+            }
+
+            context.Provincias.Remove(provincia);
+            context.SaveChanges();
+            return Ok(provincia);
+        }
+
 
     }
 }
